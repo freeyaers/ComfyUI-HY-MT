@@ -93,7 +93,7 @@
                     "label": "Language"
                 },
                 {
-                    "name": "max_new_tokens",
+                    "name": "max_tokens",
                     "type": "INT",
                     "default": 512,
                     "min": 1,
