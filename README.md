@@ -147,7 +147,7 @@ ComfyUI/models/LLM/HY-MT/
 | `target_language` | 下拉菜单 | 目标语言，格式为"语言代码 - 语言名称" | 两个节点 |
 | `prompt_template` | 文本框 | 自定义提示词模板，支持{source_text}和{target_language}变量 | 两个节点 |
 | `regex_pattern` | 文本框 | 正则表达式模式，用于提取翻译结果（支持多行模式） | 两个节点 |
-| `max_new_tokens` | 整数 | 最大新生成令牌数，范围1-4096，默认512 | 两个节点 |
+| `max_tokens` | 整数 | 最大新生成令牌数，范围1-4096，默认512 | 两个节点 |
 | `timeout` | 整数 | 翻译超时时间（秒），范围1-300，默认30秒 | 两个节点 |
 
 ### 输出参数
@@ -213,7 +213,7 @@ ComfyUI/models/LLM/HY-MT/
 ## 性能优化建议
 
 1. 使用FP8量化版本的模型可以显著减少内存占用
-2. 对于长文本翻译，可以适当调整max_new_tokens参数
+2. 对于长文本翻译，可以适当调整max_tokens参数
 3. 如果翻译任务经常超时，可以适当增加timeout参数的值
 
 ## 项目结构
