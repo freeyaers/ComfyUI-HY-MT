@@ -226,7 +226,7 @@ ComfyUI-HY-MT/
 ├── comfyui_hy_mt_config.json           # 节点配置文件
 └── workflows/                          # 工作流程示例
     ├── HY-MT-Translation.png           # 标准模型工作流程
-    ├── HY-MT-Translation (GGUF).png    # GGUF模型工作流程
+    └── HY-MT-Translation (GGUF).png    # GGUF模型工作流程
 ```
 
 ## 许可证
