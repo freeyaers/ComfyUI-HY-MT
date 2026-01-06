@@ -49,13 +49,14 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # 模型下载配置
 SAFETENSORS_MODELS = {
-    "HY-MT1.5-1.8B": "https://hf-mirror.com/Tencent-Hunyuan/Hunyuan-MT1.5-1.8B/resolve/main/",
-    "HY-MT1.5-1.8B-FP8": "https://hf-mirror.com/Tencent-Hunyuan/Hunyuan-MT1.5-1.8B-FP8/resolve/main/",
-    "HY-MT1.5-7B-FP8": "https://hf-mirror.com/Tencent-Hunyuan/Hunyuan-MT1.5-7B-FP8/resolve/main/"
+    "HY-MT1.5-1.8B": "https://huggingface.co/tencent/HY-MT1.5-1.8B/resolve/main/",
+    "HY-MT1.5-1.8B-FP8": "https://huggingface.co/tencent/HY-MT1.5-1.8B-FP8/resolve/main/",
+    "HY-MT1.5-7B": "https://huggingface.co/tencent/HY-MT1.5-7B/resolve/main/",
+    "HY-MT1.5-7B-FP8": "https://huggingface.co/tencent/HY-MT1.5-7B-FP8/resolve/main/"
 }
 
 GGUF_MODELS = {
-    "Hunyuan-MT-7B.Q4_K_M.gguf": "https://hf-mirror.com/mradermacher/Hunyuan-MT-7B-GGUF/resolve/main/Hunyuan-MT-7B.Q4_K_M.gguf?download=true"
+    "Hunyuan-MT-7B.Q4_K_M.gguf": "https://huggingface.co/mradermacher/Hunyuan-MT-7B-GGUF/resolve/main/Hunyuan-MT-7B.Q4_K_M.gguf?download=true"
 }
 
 def download_file(url, save_path):
@@ -774,6 +775,7 @@ class HYMTTranslateNode:
         default_models = [
             "HY-MT1.5-1.8B",
             "HY-MT1.5-1.8B-FP8",
+            "HY-MT1.5-7B",
             "HY-MT1.5-7B-FP8"
         ]
         
