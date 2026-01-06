@@ -1,0 +1,127 @@
+{
+    "name": "ComfyUI-HY-MT",
+    "version": "1.0.0",
+    "description": "HY-MT Translator Node for ComfyUI",
+    "author": "Your Name",
+    "url": "",
+    "category": "🦜HY-MT-Translation",
+    "nodes": [
+        {
+            "class_name": "HY-MT-Translator",
+            "display_name": "🦜HY-MT-Translation",
+            "description": "Translate text using HY-MT translation models from Tencent"
+        }
+    ],
+    "requirements": [
+        "transformers",
+        "torch"
+    ],
+    "dependencies": [],
+    "custom_nodes": {
+        "HYMTTranslateNode": {
+            "inputs": [
+                {
+                    "name": "model",
+                    "type": "COMBO",
+                    "default": "HY-MT1.5-1.8B-FP8",
+                    "options": [
+                        "HY-MT1.5-1.8B",
+                        "HY-MT1.5-1.8B-FP8",
+                        "HY-MT1.5-7B",
+                        "HY-MT1.5-7B-FP8"
+                    ],
+                    "label": "Models"
+                },
+                {
+                    "name": "content",
+                    "type": "STRING",
+                    "default": "",
+                    "multiline": true,
+                    "label": "Content"
+                },
+                {
+                    "name": "prompt",
+                    "type": "STRING",
+                    "default": "",
+                    "multiline": true,
+                    "label": "Prompt"
+                },
+                {
+                    "name": "target_language",
+                    "type": "COMBO",
+                    "default": "en - 英语",
+                    "options": [
+                        {"value": "zh - 中文", "label": "zh - 中文"},
+                        {"value": "en - 英语", "label": "en - 英语"},
+                        {"value": "fr - 法语", "label": "fr - 法语"},
+                        {"value": "pt - 葡萄牙语", "label": "pt - 葡萄牙语"},
+                        {"value": "es - 西班牙语", "label": "es - 西班牙语"},
+                        {"value": "ja - 日语", "label": "ja - 日语"},
+                        {"value": "tr - 土耳其语", "label": "tr - 土耳其语"},
+                        {"value": "ru - 俄语", "label": "ru - 俄语"},
+                        {"value": "ar - 阿拉伯语", "label": "ar - 阿拉伯语"},
+                        {"value": "ko - 韩语", "label": "ko - 韩语"},
+                        {"value": "th - 泰语", "label": "th - 泰语"},
+                        {"value": "it - 意大利语", "label": "it - 意大利语"},
+                        {"value": "de - 德语", "label": "de - 德语"},
+                        {"value": "vi - 越南语", "label": "vi - 越南语"},
+                        {"value": "ms - 马来语", "label": "ms - 马来语"},
+                        {"value": "id - 印尼语", "label": "id - 印尼语"},
+                        {"value": "tl - 菲律宾语", "label": "tl - 菲律宾语"},
+                        {"value": "hi - 印地语", "label": "hi - 印地语"},
+                        {"value": "zh-Hant - 繁体中文", "label": "zh-Hant - 繁体中文"},
+                        {"value": "pl - 波兰语", "label": "pl - 波兰语"},
+                        {"value": "cs - 捷克语", "label": "cs - 捷克语"},
+                        {"value": "nl - 荷兰语", "label": "nl - 荷兰语"},
+                        {"value": "km - 高棉语", "label": "km - 高棉语"},
+                        {"value": "my - 缅甸语", "label": "my - 缅甸语"},
+                        {"value": "fa - 波斯语", "label": "fa - 波斯语"},
+                        {"value": "gu - 古吉拉特语", "label": "gu - 古吉拉特语"},
+                        {"value": "ur - 乌尔都语", "label": "ur - 乌尔都语"},
+                        {"value": "te - 泰卢固语", "label": "te - 泰卢固语"},
+                        {"value": "mr - 马拉地语", "label": "mr - 马拉地语"},
+                        {"value": "he - 希伯来语", "label": "he - 希伯来语"},
+                        {"value": "bn - 孟加拉语", "label": "bn - 孟加拉语"},
+                        {"value": "ta - 泰米尔语", "label": "ta - 泰米尔语"},
+                        {"value": "uk - 乌克兰语", "label": "uk - 乌克兰语"},
+                        {"value": "bo - 藏语", "label": "bo - 藏语"},
+                        {"value": "kk - 哈萨克语", "label": "kk - 哈萨克语"},
+                        {"value": "mn - 蒙古语", "label": "mn - 蒙古语"},
+                        {"value": "ug - 维吾尔语", "label": "ug - 维吾尔语"},
+                        {"value": "yue - 粤语", "label": "yue - 粤语"}
+                    ],
+                    "label": "Language"
+                }
+            ],
+            "outputs": [
+                {
+                    "name": "text",
+                    "type": "STRING",
+                    "label": "Translated Text"
+                }
+            ],
+            "widgets": [
+                {
+                    "name": "model",
+                    "type": "combo",
+                    "label": "Models"
+                },
+                {
+                    "name": "content",
+                    "type": "text",
+                    "label": "Content"
+                },
+                {
+                    "name": "prompt",
+                    "type": "text",
+                    "label": "Prompt"
+                },
+                {
+                    "name": "target_language",
+                    "type": "combo",
+                    "label": "Language"
+                }
+            ]
+        }
+    }
+}
