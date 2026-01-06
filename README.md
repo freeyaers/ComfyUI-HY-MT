@@ -66,13 +66,11 @@ ComfyUI/models/LLM/HY-MT/
 └── Hunyuan-MT-7B.Q4_K_M.gguf   # GGUF格式模型文件
 ```
 
-
-
 ## 使用说明
 
-![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/flowchart/HY-MT-Translation%20(GGUF).png)
+![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/HY-MT-Translation%20(GGUF).png)
 
-![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/flowchart/HY-MT-Translation.png)
+![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/HY-MT-Translation.png)
 
 ### HY-MT Translator 节点（标准模型）
 
@@ -227,11 +225,8 @@ ComfyUI-HY-MT/
 ├── requirements.txt                    # 项目依赖文件
 ├── comfyui_hy_mt_config.json           # 节点配置文件
 └── workflows/                          # 工作流程示例
-    ├── HY-MT-Translation.json          # 标准模型工作流程
-    ├── HY-MT-Translation (GGUF).json   # GGUF模型工作流程
-    └── flowchart/                      # 参考流程图
-        ├── HY-MT-Translation.png
-        └── HY-MT-Translation (GGUF).png
+    ├── HY-MT-Translation.png           # 标准模型工作流程
+    ├── HY-MT-Translation (GGUF).png    # GGUF模型工作流程
 ```
 
 ## 许可证
