@@ -229,11 +229,16 @@ pip install compressed-tensors==0.11.0
 
 ```
 ComfyUI-HY-MT/
-├── __init__.py              # 核心实现文件
-├── README.md               # 项目说明文档
-├── test_auto_download.py   # 自动下载功能测试脚本
-├── requirements.txt        # 项目依赖文件
-└── comfyui_hy_mt_config.json  # 节点配置文件
+├── __init__.py                         # 核心实现文件
+├── README.md                           # 项目说明文档
+├── requirements.txt                    # 项目依赖文件
+├── comfyui_hy_mt_config.json           # 节点配置文件
+└── workflows/                          # 工作流程示例
+    ├── HY-MT-Translation.json          # 标准模型工作流程
+    ├── HY-MT-Translation (GGUF).json   # GGUF模型工作流程
+    └── flowchart/                      # 参考流程图
+        ├── HY-MT-Translation.png
+        └── HY-MT-Translation (GGUF).png
 ```
 
 ## 许可证
