@@ -75,6 +75,10 @@ pip install compressed-tensors==0.11.0
 
 ## 使用说明
 
+![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/flowchart/HY-MT-Translation%20(GGUF).png)
+
+![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/flowchart/HY-MT-Translation.png)
+
 ### HY-MT Translator 节点（标准模型）
 
 1. 在ComfyUI中，找到`🦜HY-MT-Translation`分类下的`🦜HY-MT-Translation`节点
