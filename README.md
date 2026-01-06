@@ -81,7 +81,7 @@ pip install compressed-tensors==0.11.0
 
 ### HY-MT Translator 节点（标准模型）
 
-1. 在ComfyUI中，找到`🦜HY-MT-Translation`分类下的`🦜HY-MT-Translation`节点
+1. 在ComfyUI中，找到`🦜HY-MT`分类下的`🦜HY-MT-Translation`节点
 2. 选择翻译模型（默认推荐使用HY-MT1.5-1.8B-FP8）
 3. 输入要翻译的文本内容
 4. 选择目标语言
