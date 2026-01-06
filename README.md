@@ -59,10 +59,10 @@ pip install llama-cpp-python
 
 ```
 ComfyUI/models/LLM/HY-MT/
-├── HY-MT1.5-1.8B/          # 标准模型文件夹（包含config.json、model.safetensors等文件）
-├── HY-MT1.5-1.8B-FP8/     # FP8量化版本模型文件夹
-├── HY-MT1.5-7B-FP8/       # 7B FP8量化版本模型文件夹
-└── Hunyuan-MT-7B.Q4_K_M.gguf  # GGUF格式模型文件
+├── HY-MT1.5-1.8B/              # 标准模型文件夹（包含config.json、model.safetensors等文件）
+├── HY-MT1.5-1.8B-FP8/          # FP8量化版本模型文件夹
+├── HY-MT1.5-7B-FP8/            # 7B FP8量化版本模型文件夹
+└── Hunyuan-MT-7B.Q4_K_M.gguf   # GGUF格式模型文件
 ```
 
 ### FP8模型配置
