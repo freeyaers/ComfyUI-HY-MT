@@ -46,12 +46,13 @@ pip install llama-cpp-python
 当您首次使用支持自动下载的模型时，插件会自动从Hugging Face下载模型并保存到本地目录。支持自动下载的模型包括：
 
 **标准模型（safetensors）：**
-- HY-MT1.5-1.8B - https://hf-mirror.com/Tencent-Hunyuan/Hunyuan-MT1.5-1.8B
-- HY-MT1.5-1.8B-FP8 - https://hf-mirror.com/Tencent-Hunyuan/Hunyuan-MT1.5-1.8B-FP8
-- HY-MT1.5-7B-FP8 - https://hf-mirror.com/Tencent-Hunyuan/Hunyuan-MT1.5-7B-FP8
+- HY-MT1.5-1.8B - https://huggingface.co/tencent/HY-MT1.5-1.8B
+- HY-MT1.5-1.8B-FP8 - https://huggingface.co/tencent/HY-MT1.5-1.8B-FP8
+- HY-MT1.5-7B - https://huggingface.co/tencent/HY-MT1.5-7B
+- HY-MT1.5-7B-FP8 - https://huggingface.co/tencent/HY-MT1.5-7B-FP8
 
 **GGUF模型：**
-- Hunyuan-MT-7B.Q4_K_M.gguf - https://hf-mirror.com/mradermacher/Hunyuan-MT-7B-GGUF
+- Hunyuan-MT-7B.Q4_K_M.gguf - https://huggingface.co/mradermacher/Hunyuan-MT-7B-GGUF
 
 ### 手动放置模型
 
