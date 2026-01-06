@@ -283,14 +283,14 @@ class HYMTTranslator:
             )
         
         # 使用更简洁的提示格式，确保模型直接输出翻译结果
-        default_template = "翻译：{source_text} -> {target_language}"
+        default_template = "翻译:{source_text} -> {target_language}"
         
         return default_template.format(
             target_language=target_language,
             source_text=source_text
         )
         
-    def translate(self, model_name, source_text, target_language, prompt_template=None, regex_pattern=None, timeout=30):
+    def translate(self, model_name, source_text, target_language, prompt_template=None, regex_pattern=None, timeout=30, max_new_tokens=512):
         """
         Translate text using the specified model and parameters with timeout
         """
@@ -308,6 +308,15 @@ class HYMTTranslator:
             return ""
             
         self.load_model(model_name)
+        
+        # Validate max_new_tokens parameter
+        try:
+            max_new_tokens = int(max_new_tokens)
+            if max_new_tokens <= 0:
+                raise ValueError("max_new_tokens must be a positive integer")
+        except (ValueError, TypeError):
+            print(f"[Translation] Invalid max_new_tokens value: {max_new_tokens}, using default value 512")
+            max_new_tokens = 512
         
         # Generate prompt with template
         formatted_prompt = self.generate_prompt(source_text, target_language, prompt_template)
@@ -350,7 +359,7 @@ class HYMTTranslator:
                 return self.model.generate(
                     input_ids=input_ids,
                     attention_mask=attention_mask,
-                    max_new_tokens=512,  # 进一步增大最大新 token 数，确保能生成完整翻译
+                    max_new_tokens=max_new_tokens,
                     top_k=20,
                     top_p=0.6,
                     repetition_penalty=1.05,
@@ -476,14 +485,14 @@ class HYMTTranslatorGGUF:
                 source_text=source_text
             )
         
-        prompt_template = "翻译：{source_text} -> {target_language}"
+        prompt_template = "翻译:{source_text} -> {target_language}"
         
         return prompt_template.format(
             target_language=target_language,
             source_text=source_text
         )
         
-    def translate(self, model_name, source_text, target_language, prompt_template=None, regex_pattern=None, timeout=30):
+    def translate(self, model_name, source_text, target_language, prompt_template=None, regex_pattern=None, timeout=30, max_new_tokens=512):
         """
         Translate text using the specified model and parameters with timeout
         """
@@ -502,6 +511,15 @@ class HYMTTranslatorGGUF:
             
         self.load_model(model_name)
         
+        # Validate max_new_tokens parameter
+        try:
+            max_new_tokens = int(max_new_tokens)
+            if max_new_tokens <= 0:
+                raise ValueError("max_new_tokens must be a positive integer")
+        except (ValueError, TypeError):
+            print(f"[Translation] Invalid max_new_tokens value: {max_new_tokens}, using default value 512")
+            max_new_tokens = 512
+        
         formatted_prompt = self.generate_prompt(source_text, target_language, prompt_template)
         print(f"[Translation] Generated prompt: {repr(formatted_prompt[:100])}...")
         
@@ -512,7 +530,7 @@ class HYMTTranslatorGGUF:
             def generate_translation():
                 return self.model(
                     formatted_prompt,
-                    max_tokens=512,
+                    max_tokens=max_new_tokens,
                     temperature=0.7,
                     top_k=20,
                     top_p=0.6,
@@ -646,6 +664,7 @@ class HYMTTranslateNodeGGUF:
                 ),
                 "prompt_template": ("STRING", {"multiline": True, "default": "把这词句翻译为{target_language}: {source_text} ", "tooltip": "自定义提示词模板，支持{source_text}和{target_language}变量"}),
                 "regex_pattern": ("STRING", {"multiline": True, "default": "", "tooltip": "正则表达式模式，用于提取翻译结果"}),
+                "max_new_tokens": ("INT", {"default": 512, "min": 1, "max": 2048, "tooltip": "生成新标记的最大数量，无效值将使用默认值512"}),
                 "timeout": ("INT", {"default": 30, "min": 1, "max": 300, "tooltip": "翻译超时时间（秒）"}),
             }
         }
@@ -657,7 +676,7 @@ class HYMTTranslateNodeGGUF:
     CATEGORY = "🦜 HY-MT"
     TITLE = "🦜 HY-MT-Translation (GGUF)"
 
-    def translate(self, gguf_name, source_text, target_language, prompt_template=None, regex_pattern=None, timeout=30):
+    def translate(self, gguf_name, source_text, target_language, prompt_template=None, regex_pattern=None, max_new_tokens=512, timeout=30):
         """
         Translate text using HY-MT translation model in GGUF format
         """
@@ -726,7 +745,8 @@ class HYMTTranslateNodeGGUF:
                 target_lang_name,
                 prompt_template,
                 regex_pattern,
-                timeout
+                timeout,
+                max_new_tokens
             )
             
             return (translation, formatted_prompt)
@@ -840,8 +860,9 @@ class HYMTTranslateNode:
                     language_choices,
                     {"default": "en - 英语", "label_to_name": lang_code_map}
                 ),
-                "prompt_template": ("STRING", {"multiline": True, "default": "翻译：{source_text} -> {target_language}", "tooltip": "自定义提示词模板，支持{source_text}和{target_language}变量"}),
+                "prompt_template": ("STRING", {"multiline": True, "default": "翻译:{source_text} -> {target_language}", "tooltip": "自定义提示词模板，支持{source_text}和{target_language}变量"}),
                 "regex_pattern": ("STRING", {"default": "", "multiline": True}),
+                "max_new_tokens": ("INT", {"default": 512, "min": 1, "max": 2048, "tooltip": "生成新标记的最大数量，无效值将使用默认值512"}),
                 "timeout": ("INT", {"default": 30, "min": 1, "max": 300, "tooltip": "翻译超时时间（秒）"}),
             }
         }
@@ -852,7 +873,7 @@ class HYMTTranslateNode:
     CATEGORY = "🦜 HY-MT"
     DESCRIPTION = "Translate text using HY-MT translation models. \n\nFeatures:\n- Multi-line regex extraction support: each line is a regex pattern, tested in order\n- Fallback to raw output if no regex patterns match\n- Supports extraction with capturing groups"
     
-    def translate(self, ckpt_name, source_text, target_language, prompt_template=None, regex_pattern=None, timeout=30):
+    def translate(self, ckpt_name, source_text, target_language, prompt_template=None, regex_pattern=None, max_new_tokens=512, timeout=30):
         """
         Perform translation
         """
@@ -915,7 +936,7 @@ class HYMTTranslateNode:
             formatted_prompt = translator.generate_prompt(processed_text, target_lang_name, prompt_template)
             
             # Perform translation
-            translation = translator.translate(ckpt_name, processed_text, target_lang_name, prompt_template, regex_pattern, timeout)
+            translation = translator.translate(ckpt_name, processed_text, target_lang_name, prompt_template, regex_pattern, timeout, max_new_tokens)
             return (translation, formatted_prompt)
             
         except Exception as e:
