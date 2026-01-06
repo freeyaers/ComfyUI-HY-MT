@@ -65,13 +65,7 @@ ComfyUI/models/LLM/HY-MT/
 └── Hunyuan-MT-7B.Q4_K_M.gguf   # GGUF格式模型文件
 ```
 
-### FP8模型配置
 
-如果您想使用FP8量化版本的模型，需要将模型的`config.json`文件中的`"ignored_layers"`字段名修改为`"ignore"`，并将`compressed-tensors`库升级至0.11.0版本：
-
-```bash
-pip install compressed-tensors==0.11.0
-```
 
 ## 使用说明
 
