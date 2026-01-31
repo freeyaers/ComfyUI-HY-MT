@@ -1,165 +1,167 @@
+👉 **[简体中文](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/README_CN.md)**
+
 # ComfyUI-HY-MT
 
-HY-MT Translator Node for ComfyUI - 一个用于使用腾讯HY-MT翻译模型进行文本翻译的ComfyUI插件。
+HY-MT Translator Node for ComfyUI - A ComfyUI plugin for text translation using Tencent's HY-MT translation models.
 
-## 功能特点
+## Features
 
-- 支持多个HY-MT翻译模型版本（1.8B、7B，包含FP8量化版本）
-- 支持GGUF格式的量化模型（如Hunyuan-MT-7B.Q4_K_M.gguf）
-- 支持37种语言翻译
-- 提供灵活的提示词系统，支持自定义翻译提示
-- 源文本预处理功能：自动合并多行文本，用逗号隔开，并合并多个连续逗号
-- 支持自定义超时设置，防止翻译任务长时间无响应
-- 支持正则表达式提取功能，用于精确提取翻译结果
-- 自动检测源语言并生成合适的翻译提示
-- 支持批量翻译和自定义上下文翻译
-- **自动模型下载**：当选择的模型不存在时，自动从Hugging Face下载并保存到本地目录
+- Supports multiple HY-MT translation model versions (1.8B, 7B, including FP8 quantized versions)
+- Supports GGUF format quantized models (e.g., Hunyuan-MT-7B.Q4_K_M.gguf)
+- Supports 37 languages for translation
+- Provides a flexible prompt system with support for custom translation prompts
+- Source text preprocessing: automatically merges multiple lines, separates with commas, and merges multiple consecutive commas
+- Supports custom timeout settings to prevent translation tasks from becoming unresponsive
+- Supports regular expression extraction for precise extraction of translation results
+- Automatically detects source language and generates appropriate translation prompts
+- Supports batch translation and custom context translation
+- **Automatic model download**: When the selected model does not exist, it automatically downloads from Hugging Face and saves to the local directory
 
-## 安装方法
+## Installation
 
-### 1. 手动安装
+### 1. Manual Installation
 
-1. 下载或克隆此仓库到ComfyUI的`custom_nodes`目录
-2. 确保您的ComfyUI环境已安装所需的依赖库
-3. 将HY-MT模型文件放置在`ComfyUI/models/LLM/HY-MT/`目录下
+1. Download or clone this repository to the `custom_nodes` directory of ComfyUI
+2. Ensure your ComfyUI environment has the required dependencies installed
+3. Place the HY-MT model files in the `ComfyUI/models/LLM/HY-MT/` directory
 
-### 2. 依赖库
+### 2. Dependencies
 
-确保您的Python环境已安装以下依赖：
+Ensure your Python environment has the following dependencies installed:
 
 ```bash
 pip install transformers torch modelscope requests tqdm
 ```
 
-### 3. GGUF模型支持
+### 3. GGUF Model Support
 
-如果您需要使用GGUF格式的模型，还需要安装额外的依赖：
+If you need to use GGUF format models, you also need to install additional dependencies:
 
 ```bash
 pip install llama-cpp-python
 ```
 
-## 模型准备
+## Model Preparation
 
-### 自动下载功能
+### Automatic Download Feature
 
-当您首次使用支持自动下载的模型时，插件会自动从Hugging Face下载模型并保存到本地目录。支持自动下载的模型包括：
+When you first use a model that supports automatic download, the plugin will automatically download the model from Hugging Face and save it to the local directory. Models that support automatic download include:
 
-**标准模型（safetensors）：**
+**Standard models (safetensors):**
 - HY-MT1.5-1.8B - https://huggingface.co/tencent/HY-MT1.5-1.8B
 - HY-MT1.5-1.8B-FP8 - https://huggingface.co/tencent/HY-MT1.5-1.8B-FP8
 - HY-MT1.5-7B - https://huggingface.co/tencent/HY-MT1.5-7B
 - HY-MT1.5-7B-FP8 - https://huggingface.co/tencent/HY-MT1.5-7B-FP8
 
-**GGUF模型：**
+**GGUF models:**
 - Hunyuan-MT-7B.Q4_K_M.gguf - https://huggingface.co/mradermacher/Hunyuan-MT-7B-GGUF
 
-### 手动放置模型
+### Manual Model Placement
 
-如果您希望手动下载模型，可以将模型文件放置在以下目录：
+If you prefer to download models manually, you can place the model files in the following directory:
 
 ```
 ComfyUI/models/LLM/HY-MT/
-├── HY-MT1.5-1.8B/              # 标准模型文件夹（包含config.json、model.safetensors等文件）
-├── HY-MT1.5-1.8B-FP8/          # FP8量化版本模型文件夹
-├── HY-MT1.5-7B-FP8/            # 7B FP8量化版本模型文件夹
-└── Hunyuan-MT-7B.Q4_K_M.gguf   # GGUF格式模型文件
+├── HY-MT1.5-1.8B/              # Standard model folder (contains config.json, model.safetensors, etc.)
+├── HY-MT1.5-1.8B-FP8/          # FP8 quantized version model folder
+├── HY-MT1.5-7B-FP8/            # 7B FP8 quantized version model folder
+└── Hunyuan-MT-7B.Q4_K_M.gguf   # GGUF format model file
 ```
 
-## 使用说明
+## Usage Instructions
 
 ![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/HY-MT-Translation%20(GGUF).png)
 
 ![Image text](https://github.com/freeyaers/ComfyUI-HY-MT/blob/main/workflows/HY-MT-Translation.png)
 
-### HY-MT Translator 节点（标准模型）
+### HY-MT Translator Node (Standard Model)
 
-1. 在ComfyUI中，找到`🦜HY-MT`分类下的`🦜HY-MT-Translation`节点
-2. 选择翻译模型（默认推荐使用HY-MT1.5-1.8B-FP8）
-3. 输入要翻译的文本内容
-4. 选择目标语言
-5. （可选）输入自定义提示词模板（如果需要）
-6. （可选）输入正则表达式模式，用于提取特定格式的翻译结果
-7. （可选）设置翻译超时时间（默认30秒）
-8. 连接输出到其他节点或直接查看翻译结果
+1. In ComfyUI, find the `🦜HY-MT` category and select the `🦜HY-MT-Translation` node
+2. Select the translation model (recommended to use HY-MT1.5-1.8B-FP8 by default)
+3. Enter the text content to be translated
+4. Select the target language
+5. (Optional) Enter a custom prompt template (if needed)
+6. (Optional) Enter a regular expression pattern for extracting translation results in a specific format
+7. (Optional) Set the translation timeout (default 30 seconds)
+8. Connect the output to other nodes or directly view the translation result
 
-### HY-MT Translator (GGUF) 节点（GGUF模型）
+### HY-MT Translator (GGUF) Node (GGUF Model)
 
-1. 在ComfyUI中，找到`🦜 HY-MT`分类下的`🦜 HY-MT-Translation (GGUF)`节点
-2. 选择GGUF格式的翻译模型（如Hunyuan-MT-7B.Q4_K_M.gguf）
-3. 输入要翻译的文本内容
-4. 选择目标语言
-5. （可选）输入自定义提示词模板（如果需要）
-6. （可选）输入正则表达式模式，用于提取特定格式的翻译结果
-7. （可选）设置翻译超时时间（默认30秒）
-8. 连接输出到其他节点或直接查看翻译结果
+1. In ComfyUI, find the `🦜 HY-MT` category and select the `🦜 HY-MT-Translation (GGUF)` node
+2. Select the GGUF format translation model (e.g., Hunyuan-MT-7B.Q4_K_M.gguf)
+3. Enter the text content to be translated
+4. Select the target language
+5. (Optional) Enter a custom prompt template (if needed)
+6. (Optional) Enter a regular expression pattern for extracting translation results in a specific format
+7. (Optional) Set the translation timeout (default 30 seconds)
+8. Connect the output to other nodes or directly view the translation result
 
-## 提示词模板语法
+## Prompt Template Syntax
 
-### 默认提示词模板
+### Default Prompt Template
 
-默认提示词模板为：
+The default prompt template is:
 ```
-翻译：{source_text} -> {target_language}
-```
-
-### 自定义提示词模板
-
-您可以通过`prompt_template`参数自定义提示词模板，支持以下变量：
-
-- `{source_text}` - 预处理后的源文本（多行合并为一行，用逗号隔开）
-- `{target_language}` - 目标语言的中文名称（如"英语"、"日语"等）
-
-### 提示词示例
-
-#### 简单翻译
-```
-翻译：{source_text} -> {target_language}
+Translation: {source_text} -> {target_language}
 ```
 
-#### 更详细的提示
+### Custom Prompt Template
+
+You can customize the prompt template through the `prompt_template` parameter, which supports the following variables:
+
+- `{source_text}` - Preprocessed source text (multiple lines merged into one, separated by commas)
+- `{target_language}` - Target language name in Chinese (e.g., "English", "Japanese", etc.)
+
+### Prompt Examples
+
+#### Simple Translation
 ```
-请将以下内容翻译成{target_language}，保持原意准确：
+Translation: {source_text} -> {target_language}
+```
+
+#### More Detailed Prompt
+```
+Please translate the following content into {target_language}, keeping the original meaning accurate:
 {source_text}
 ```
 
-#### 专业领域翻译
+#### Professional Field Translation
 ```
-请将以下技术文档内容翻译成{target_language}，术语使用要准确：
+Please translate the following technical document content into {target_language}, using accurate terminology:
 {source_text}
 ```
 
-#### 自然语言风格翻译
+#### Natural Language Style Translation
 ```
-请将以下内容翻译成自然流畅的{target_language}：
+Please translate the following content into natural and fluent {target_language}:
 {source_text}
 ```
 
-## 参数说明
+## Parameter Description
 
-### 输入参数
+### Input Parameters
 
-| 参数名称 | 类型 | 描述 | 节点 |
+| Parameter Name | Type | Description | Node |
 |---------|------|------|------|
-| `ckpt_name` | 下拉菜单 | 选择要使用的标准模型 | HY-MT Translator |
-| `gguf_name` | 下拉菜单 | 选择要使用的GGUF格式模型 | HY-MT Translator (GGUF) |
-| `source_text` | 文本框 | 要翻译的源文本，支持多行输入 | 两个节点 |
-| `target_language` | 下拉菜单 | 目标语言，格式为"语言代码 - 语言名称" | 两个节点 |
-| `prompt_template` | 文本框 | 自定义提示词模板，支持{source_text}和{target_language}变量 | 两个节点 |
-| `regex_pattern` | 文本框 | 正则表达式模式，用于提取翻译结果（支持多行模式） | 两个节点 |
-| `max_tokens` | 整数 | 最大新生成令牌数，范围1-4096，默认512 | 两个节点 |
-| `timeout` | 整数 | 翻译超时时间（秒），范围1-300，默认30秒 | 两个节点 |
+| `ckpt_name` | Dropdown | Select the standard model to use | HY-MT Translator |
+| `gguf_name` | Dropdown | Select the GGUF format model to use | HY-MT Translator (GGUF) |
+| `source_text` | Text box | Source text to translate, supports multi-line input | Both nodes |
+| `target_language` | Dropdown | Target language, formatted as "language code - language name" | Both nodes |
+| `prompt_template` | Text box | Custom prompt template, supports {source_text} and {target_language} variables | Both nodes |
+| `regex_pattern` | Text box | Regular expression pattern for extracting translation results (supports multi-line mode) | Both nodes |
+| `max_tokens` | Integer | Maximum number of new tokens to generate, range 1-4096, default 512 | Both nodes |
+| `timeout` | Integer | Translation timeout (seconds), range 1-300, default 30 seconds | Both nodes |
 
-### 输出参数
+### Output Parameters
 
-| 参数名称 | 类型 | 描述 | 节点 |
+| Parameter Name | Type | Description | Node |
 |---------|------|------|------|
-| `text` | 字符串 | 翻译后的文本结果 | 两个节点 |
-| `prompt_text` | 字符串 | 处理后的完整提示词（包含变量替换后的内容） | 两个节点 |
+| `text` | String | Translated text result | Both nodes |
+| `prompt_text` | String | Processed complete prompt (including content after variable substitution) | Both nodes |
 
-## 支持的语言
+## Supported Languages
 
-| 语言 | 缩写 | 中文名称 |
+| Language | Abbreviation | Chinese Name |
 |------|------|----------|
 | Chinese | zh | 中文 |
 | English | en | 英语 |
@@ -200,39 +202,39 @@ ComfyUI/models/LLM/HY-MT/
 | Uyghur | ug | 维吾尔语 |
 | Cantonese | yue | 粤语 |
 
-## 注意事项
+## Notes
 
-1. 第一次使用如果本地没有模型会自动下载
-2. 模型加载后会保持在内存中，直到ComfyUI关闭
-3. 如果源文本字段为空，将直接返回空值，跳过推理
-4. 自定义提示词优先级高于自动生成的提示词
-5. GGUF模型需要安装llama-cpp-python库支持
-6. 源文本会自动进行预处理：合并多行，用逗号隔开，并合并多个连续逗号
-7. 如果正则表达式匹配失败，会返回原始的翻译结果
+1. The first time you use it, if the model is not locally available, it will be automatically downloaded
+2. Once loaded, the model will remain in memory until ComfyUI is closed
+3. If the source text field is empty, it will directly return an empty value and skip inference
+4. Custom prompts take priority over automatically generated prompts
+5. GGUF models require the llama-cpp-python library to be installed
+6. Source text will be automatically preprocessed: merge multiple lines, separate with commas, and merge multiple consecutive commas
+7. If regular expression matching fails, the original translation result will be returned
 
-## 性能优化建议
+## Performance Optimization Suggestions
 
-1. 使用FP8量化版本的模型可以显著减少内存占用
-2. 对于长文本翻译，可以适当调整max_tokens参数
-3. 如果翻译任务经常超时，可以适当增加timeout参数的值
+1. Using FP8 quantized versions of models can significantly reduce memory usage
+2. For long text translation, you can appropriately adjust the max_tokens parameter
+3. If translation tasks frequently timeout, you can appropriately increase the value of the timeout parameter
 
-## 项目结构
+## Project Structure
 
 ```
 ComfyUI-HY-MT/
-├── __init__.py                         # 核心实现文件
-├── README.md                           # 项目说明文档
-├── requirements.txt                    # 项目依赖文件
-├── comfyui_hy_mt_config.json           # 节点配置文件
-└── workflows/                          # 工作流程示例
-    ├── HY-MT-Translation.png           # 标准模型工作流程
-    └── HY-MT-Translation (GGUF).png    # GGUF模型工作流程
+├── __init__.py                         # Core implementation file
+├── README.md                           # Project documentation
+├── requirements.txt                    # Project dependencies file
+├── comfyui_hy_mt_config.json           # Node configuration file
+└── workflows/                          # Workflow examples
+    ├── HY-MT-Translation.png           # Standard model workflow
+    └── HY-MT-Translation (GGUF).png    # GGUF model workflow
 ```
 
-## 许可证
+## License
 
-本项目根据MIT许可证分发，供个人和商业使用。
+This project is distributed under the MIT License for personal and commercial use.
 
-## 联系信息
+## Contact Information
 
-如有问题或建议，请通过GitHub Issues联系开发者。
+If you have any questions or suggestions, please contact the developer through GitHub Issues.
